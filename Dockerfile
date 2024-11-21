@@ -1,20 +1,21 @@
-# Use the official Python 3 image as the base
-FROM python:3
+# Use Python 3 as the base image
+FROM python:3.9
 
 # Set the working directory inside the container
 WORKDIR /data
 
-# Install system dependencies
+# Install system dependencies, including distutils
 RUN apt-get update && apt-get install -y python3-distutils && apt-get clean
 
-# Copy application files to the container
+# Copy the application code into the container
 COPY . .
 
-# Install Django and other Python dependencies
+# Install Django and other dependencies
 RUN pip install --no-cache-dir django==3.2
 
-# Expose the port Django runs on
+# Expose the port Django uses
 EXPOSE 8000
 
-# Command to start the Django development server
+# Run the application
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
